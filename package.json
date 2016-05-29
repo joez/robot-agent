@@ -1,0 +1,28 @@
+{
+  "name": "robot-agent",
+  "version": "0.0.1",
+  "description": "Robot agent to connect robot with cloud",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joez/robot-agent.git"
+  },
+  "keywords": [
+    "robot",
+    "node",
+    "ros"
+  ],
+  "author": "Joe Zheng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joez/robot-agent/issues"
+  },
+  "homepage": "https://github.com/joez/robot-agent#readme",
+  "dependencies": {
+    "roslib": "^0.18.0",
+    "socket.io": "^1.4.6"
+  }
+}
