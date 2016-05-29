@@ -1,6 +1,6 @@
 # robot-agent
 Robot agent to connect robot with cloud
 
-# development
+## Getting started
     npm install
-    node app.js
+    NODE_ENV=production node app.js
