@@ -22,6 +22,7 @@ ros.on('close', function() {
 });
 
 var teleop = require('./app/controllers/teleop')(ros);
+var photo = require('./app/controllers/photo')(ros);
 
 var socket = io.connect(config.cloudMaster.url);
 console.log('connecting to ' + config.cloudMaster.url);
@@ -40,7 +41,14 @@ socket.on('disconnect', function() {
 
 socket.on('teleop', function(data) {
   console.log('teleop: ' + data);
-  teleop.handle(data);
+  // TODO: refactor later
+  if (teleop.handle(data)) {
+
+  } else if (photo.handle(data, function(message){
+    socket.emit('photo', message);
+  })) {
+
+  }
 });
 
 console.log('robot agent started');
