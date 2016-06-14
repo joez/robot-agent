@@ -2,6 +2,8 @@
 
 'use strict';
 
+var debug = require('debug')('robot-agent:app');
+
 var io = require('socket.io-client');
 var roslib = require('roslib');
 
@@ -9,38 +11,38 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var config = require('./config/configs');
 
 var ros = new roslib.Ros({ url : config.rosBridge.url });
-console.log('connecting to ' + config.rosBridge.url);
+debug('connecting to robot: '+ config.rosBridge.url);
 
 ros.on('connection', function() {
-  console.log('ros: connected to server');
+  debug('robot: connected to server');
 });
 ros.on('error', function(error) {
-  console.log('ros: connection error: ' + error);
+  debug('robot: connection error: ' + error);
 });
 ros.on('close', function() {
-  console.log('ros: disconnected');
+  debug('robot: disconnected');
 });
 
 var teleop = require('./app/controllers/teleop')(ros);
 var photo = require('./app/controllers/photo')(ros);
 
 var socket = io.connect(config.cloudMaster.url);
-console.log('connecting to ' + config.cloudMaster.url);
+debug('connecting to cloud: ' + config.cloudMaster.url);
 
 socket.on('connect', function() {
-  console.log('connected to server');
+  debug('cloud: connected to server');
 });
 
 socket.on('error', function(error) {
-  console.log('connection error: ' + error);
+  debug('cloud: connection error: ' + error);
 });
 
 socket.on('disconnect', function() {
-  console.log('disconnected');
+  debug('cloud: disconnected');
 });
 
 socket.on('teleop', function(data) {
-  console.log('teleop: ' + data);
+  debug('teleop: ' + data);
   // TODO: refactor later
   if (teleop.handle(data)) {
 
@@ -51,4 +53,4 @@ socket.on('teleop', function(data) {
   }
 });
 
-console.log('robot agent started');
+debug('robot agent started');

@@ -1,5 +1,6 @@
 'use strict';
 
+var debug = require('debug')('robot-agent:photo');
 var roslib = require('roslib');
 
 module.exports = function (ros) {
@@ -23,7 +24,7 @@ module.exports = function (ros) {
         });
 
         topic.subscribe(function(message) {
-          console.log("captured a photo with format: " + message.format);
+          debug("captured a photo with format: " + message.format);
           cb({ type : "image/jpeg", data : message.data});
           topic.unsubscribe();
         });

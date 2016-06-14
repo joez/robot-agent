@@ -1,5 +1,6 @@
 'use strict';
 
+var debug = require('debug')('robot-agent:teleop');
 var roslib = require('roslib');
 
 module.exports = function (ros) {
@@ -32,6 +33,8 @@ module.exports = function (ros) {
       }
 
       if (handled) {
+        debug('cmd: ' + cmd);
+
         var cmdVel = new roslib.Topic({
           ros : ros,
           name : '/cmd_vel_mux/input/navi',
