@@ -23,7 +23,7 @@ ros.on('close', function() {
   debug('robot: disconnected');
 });
 
-var teleop = require('./app/controllers/teleop')(ros);
+var teleop = new (require('./app/controllers/teleop'))(ros);
 var photo = require('./app/controllers/photo')(ros);
 
 var socket = io.connect(config.cloudMaster.url);
