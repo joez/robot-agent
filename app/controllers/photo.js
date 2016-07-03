@@ -27,7 +27,7 @@ module.exports = function (ros) {
         topic.subscribe(function(message) {
           debug("captured a photo with format: " + message.format);
           cb({ type : "image/jpeg", data : message.data});
-            topic.unsubscribe();
+          topic.unsubscribe();
         });
       }
 

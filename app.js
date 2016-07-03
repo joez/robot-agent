@@ -25,12 +25,16 @@ ros.on('close', function() {
 
 var teleop = new (require('./app/controllers/teleop'))(ros);
 var photo = require('./app/controllers/photo')(ros);
+var door = new (require('./app/controllers/door'))(ros);
 
 var socket = io.connect(config.cloudMaster.url);
 debug('connecting to cloud: ' + config.cloudMaster.url);
 
 socket.on('connect', function() {
   debug('cloud: connected to server');
+  door.subscribe(function (isOpen) {
+    socket.emit('alarm', 'The door is ' + (isOpen ? 'opened' : 'closed'));
+  });
 });
 
 socket.on('error', function(error) {

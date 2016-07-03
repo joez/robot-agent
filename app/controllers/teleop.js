@@ -27,29 +27,29 @@ function Teleop(ros) {
         max : 1
       },
       angular : {
-        base : 10,
-        min : 5,
+        base : 30,
+        min : 10,
         max : 180
       }
     }
   });
-};
+}
 
 Teleop.prototype.getSpeed = function (config) {
   return Math.min(config.max, Math.max(config.min, this.speed * config.base));
-}
+};
 
 Teleop.prototype.getLinearSpeed = function () {
   return this.getSpeed(this.config.linear);
-}
+};
 
 Teleop.prototype.getAngularSpeed = function () {
   return this.getSpeed(this.config.angular);
-}
+};
 
 Teleop.prototype.radians = function (degrees) {
   return degrees * Math.PI / 180;
-}
+};
 
 Teleop.prototype.done = function () {
   var self = this;
@@ -62,7 +62,7 @@ Teleop.prototype.done = function () {
   }, self.timeline);
 
   return self;
-}
+};
 
 Teleop.prototype.moveForMeters = function (meters) {
   var self = this;
@@ -81,7 +81,7 @@ Teleop.prototype.moveForMeters = function (meters) {
   debug('moveForMeters: ' + meters + ' with speed ' + speed + 'm/s , duration ' + duration + 's');
 
   return self.repeatForDuration(tick, duration);
-}
+};
 
 Teleop.prototype.turnForDegrees = function (degrees, speed, next) {
   var self = this;
@@ -100,7 +100,7 @@ Teleop.prototype.turnForDegrees = function (degrees, speed, next) {
   debug('turnForDegrees: ' + degrees + ' with speed ' + speed + 'm/s , duration ' + duration + 's');
 
   return self.repeatForDuration(tick, duration);
-}
+};
 
 Teleop.prototype.repeatForDuration = function (tick, duration) {
   var step = 1000 / this.config.hz; // in ms
@@ -111,7 +111,7 @@ Teleop.prototype.repeatForDuration = function (tick, duration) {
   }
 
   return this;
-}
+};
 
 Teleop.prototype.genTwistMessage = function (move) {
   // linear x and y movement and angular z movement
@@ -153,7 +153,7 @@ Teleop.prototype.genTwistMessage = function (move) {
   });
 
   return twist;
-}
+};
 
 Teleop.prototype.handle = function (cmd, data) {
   var handled = true;
